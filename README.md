@@ -8,6 +8,12 @@ This repository contains:
 - precomputed forecast artifacts stored in Parquet/JSON formats,
 - a Jupyter notebook used for analysis and model experimentation.
 
+## Live Demo
+
+Open the deployed application here:
+
+https://sales-demand-forecasting-hwve.onrender.com/
+
 ## Project Overview
 
 The goal of this project is to estimate future demand for individual stores using historical transaction patterns and store characteristics. Forecast outputs include:
