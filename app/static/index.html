@@ -3,69 +3,85 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sales Forecasting Dashboard</title>
+  <title>Sales Forecasting</title>
 
-  <link rel="icon" href="/static/public/favicon.ico">
-
+  <link rel="icon" href="/static/public/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/static/public/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;500&display=swap">
   <link rel="stylesheet" href="/static/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
-<body>
-  <header class="topbar">
-    <h1>Sales Forecasting</h1>
-    <nav class="tabs">
-      <button class="tab active" data-tab="forecast">Forecast</button>
-      <button class="tab" data-tab="results">Model results</button>
-    </nav>
-  </header>
+<body data-tab="forecast">
+  <div class="shell">
+    <aside class="side">
+      <div class="brand">Sales Forecasting</div>
 
-  <main>
-    <section id="tab-forecast" class="tab-panel active">
-      <aside class="card controls">
-        <label>Search store
-          <input id="search" type="search" placeholder="e.g. 262" inputmode="numeric">
+      <nav class="tabs">
+        <button class="tab active" data-tab="forecast">Forecast</button>
+        <button class="tab" data-tab="results">Model results</button>
+      </nav>
+
+      <div class="controls forecast-only">
+        <label>Search
+          <input id="search" type="search" placeholder="Store number" inputmode="numeric">
         </label>
-        <label>Store type
-          <select id="typeFilter"><option value="">All types</option></select>
-        </label>
+        <div class="pair">
+          <label>Type
+            <select id="typeFilter"><option value="">All</option></select>
+          </label>
+          <label>History
+            <select id="historyDays">
+              <option value="30">30 days</option>
+              <option value="90" selected>90 days</option>
+              <option value="180">180 days</option>
+              <option value="365">1 year</option>
+            </select>
+          </label>
+        </div>
         <label>Sort by
           <select id="sortBy">
             <option value="id">Store number</option>
-            <option value="worst">Largest error first</option>
-            <option value="sales">Highest sales first</option>
+            <option value="worst">Largest error</option>
+            <option value="sales">Highest sales</option>
           </select>
         </label>
-        <label>History shown
-          <select id="historyDays">
-            <option value="30">30 days</option>
-            <option value="90" selected>90 days</option>
-            <option value="180">180 days</option>
-            <option value="365">1 year</option>
-          </select>
-        </label>
-        <label>Store
-          <select id="storeSelect" size="12"></select>
-        </label>
-      </aside>
+      </div>
 
-      <div class="content">
+      <div class="list forecast-only">
+        <div class="row head"><span>Store</span><span>Type</span><span>RMSPE</span></div>
+        <div id="storeList" class="rows"></div>
+      </div>
+    </aside>
+
+    <main>
+      <section id="tab-forecast" class="tab-panel active">
+        <header class="page-head">
+          <div>
+            <h1 id="title">Store</h1>
+            <p id="meta" class="meta"></p>
+          </div>
+          <a id="csvLink" class="btn" href="#">Download CSV</a>
+        </header>
         <div id="status" class="status" role="status"></div>
+
         <div id="kpis" class="kpis"></div>
+
         <div class="card">
+          <h2>Daily sales</h2>
           <div class="chart-wrap"><canvas id="chart" aria-label="Forecast chart"></canvas></div>
         </div>
+
         <div class="card">
-          <div class="table-head">
-            <h2>Forecast by day</h2>
-            <a id="csvLink" class="btn" href="#">Download CSV</a>
-          </div>
+          <h2>Forecast by day</h2>
           <div class="table-scroll"><table id="fcTable"></table></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="tab-results" class="tab-panel"><div id="tables"></div></section>
-  </main>
+      <section id="tab-results" class="tab-panel"><div id="tables"></div></section>
+    </main>
+  </div>
 
   <script src="/static/js/app.js"></script>
 </body>
